@@ -1,7 +1,31 @@
 doctype html
 html
   head
-    title= title
-    link(rel='stylesheet', href='/stylesheets/style.css')
+    meta(charset='utf-8')
+    link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+    title= 'Snowflake Nodejs Consumer App'
   body
+    nav.navbar.navbar-default.navbar-static-top(role='navigation')
+      .container
+        .navbar-header
+          a.navbar-brand(href='/')= 'Node.js App'
+        div
+          ul.nav.navbar-nav.navbar-right
+            li
+              - if (false)
+                a.dropdown-toggle('data-toggle'='dropdown', href='#')= 'Signed in as #{@current_user["sub"]}'
+                ul.dropdown-menu
+                  li
+                    a(href='/user/logout') Logout
+              - else
+                a.dropdown-toggle('data-toggle'='dropdown', href='#')= 'You are not logged in'
+                ul.dropdown-menu
+                  li
+                    a(href='/user/login/snowflake')= 'Sign in with Snowflake'
+
+  .container
     block content
+
+
+  script(src='/scripts/jquery.min.js')
+  script(src='/scripts/bootstrap.min.js')
