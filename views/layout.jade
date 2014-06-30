@@ -12,8 +12,8 @@ html
         div
           ul.nav.navbar-nav.navbar-right
             li
-              - if (false)
-                a.dropdown-toggle('data-toggle'='dropdown', href='#')= 'Signed in as #{@current_user["sub"]}'
+              - if (user)
+                a.dropdown-toggle('data-toggle'='dropdown', href='#')= 'Signed in as ' + user.sub
                 ul.dropdown-menu
                   li
                     a(href='/user/logout') Logout
@@ -25,7 +25,6 @@ html
 
   .container
     block content
-
 
   script(src='/scripts/jquery.min.js')
   script(src='/scripts/bootstrap.min.js')

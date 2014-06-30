@@ -1,4 +1,7 @@
 extends layout
 
 block content
-  p= message
+  - if (user)
+    p= 'Hi ' + user.given_name + ' ' + user.family_name + '!'
+  - else
+    p= message
