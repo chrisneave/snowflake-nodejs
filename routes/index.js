@@ -24,17 +24,21 @@ router.get('/', function(req, res) {
   }
 });
 
-router.get('/user/login', function(req, res) {
-  res.render('login');
+router.get('/login/connect', function(req, res) {
+  if (req.query.iss === 'https://snowflake-op.herokuapp.com') {
+    res.redirect('https://snowflake-op.herokuapp.com/oauth/authorize?' + qs.stringify({
+      client_id: 'snowflake-nodejs',
+      response_type: 'code',
+      redirect_uri: 'https://snowflake-nodejs.herokuapp.com/login/connect/snowflake',
+      scope: 'openid profile email'
+    }));
+  }
+
+  res.render('error', { message: 'Missing iss query parameter!' });
 });
 
-router.get('/user/login/snowflake', function(req, res) {
-  res.redirect('https://snowflake-op.herokuapp.com/oauth/authorize?' + qs.stringify({
-    client_id: 'snowflake-nodejs',
-    response_type: 'code',
-    redirect_uri: 'https://snowflake-nodejs.herokuapp.com/user/login/openid/snowflake',
-    scope: 'openid profile email'
-  }));
+router.get('/user/login', function(req, res) {
+  res.render('login');
 });
 
 router.get('/user/logout', function(req, res) {
@@ -76,7 +80,7 @@ function getToken(code, done) {
 
   post_data.client_id = 'snowflake-nodejs';
   post_data.grant_type = 'authorization_code';
-  post_data.redirect_uri = 'https://snowflake-nodejs.herokuapp.com/user/login/openid/snowflake';
+  post_data.redirect_uri = 'https://snowflake-nodejs.herokuapp.com/login/connect/snowflake';
   post_data.code = code;
 
   request = https.request({
@@ -106,7 +110,7 @@ function getToken(code, done) {
   request.end();
 };
 
-router.get('/user/login/openid/snowflake', function(req, res) {
+router.get('/login/connect/snowflake', function(req, res) {
   if (req.params['error']) {
     res.render('error', { message: util.format('%s', req.params['error']) })
   }
