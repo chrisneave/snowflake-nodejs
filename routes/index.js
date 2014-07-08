@@ -26,7 +26,7 @@ router.get('/', function(req, res) {
 
 router.get('/login/connect', function(req, res) {
   if (req.query.iss === 'https://snowflake-op.herokuapp.com') {
-    res.redirect('https://snowflake-op.herokuapp.com/oauth/authorize?' + qs.stringify({
+    res.redirect('https://snowflake-op.herokuapp.com/auth/oauth/v2/authorize?' + qs.stringify({
       client_id: 'snowflake-nodejs',
       response_type: 'code',
       redirect_uri: 'https://snowflake-nodejs.herokuapp.com/login/connect/snowflake',
@@ -86,7 +86,7 @@ function getToken(code, done) {
   request = https.request({
     hostname: 'snowflake-op.herokuapp.com',
     port: 443,
-    path: '/oauth/token',
+    path: '/auth/oauth/v2/token',
     method: 'POST',
     auth: 'snowflake-nodejs:7796f01f7251dc47f440ae461ac2fc8d'
   }, function(res) {
