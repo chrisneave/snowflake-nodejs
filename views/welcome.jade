@@ -2,6 +2,6 @@ extends layout
 
 block content
   - if (user)
-    p= 'Hi ' + user.given_name + ' ' + user.family_name + '!'
+    p= 'Hi ' + user.name + '!'
   - else
     p= message
